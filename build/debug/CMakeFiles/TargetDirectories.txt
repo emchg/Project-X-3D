@@ -1,0 +1,3 @@
+/home/raton/Documents/x/2a/p3/csc/3d/Project-X-3D/build/debug/CMakeFiles/project.dir
+/home/raton/Documents/x/2a/p3/csc/3d/Project-X-3D/build/debug/CMakeFiles/edit_cache.dir
+/home/raton/Documents/x/2a/p3/csc/3d/Project-X-3D/build/debug/CMakeFiles/rebuild_cache.dir
