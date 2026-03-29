@@ -63,13 +63,6 @@ struct scene_structure : cgp::scene_inputs_generic {
 
 	timer_basic timer;
 
-	mesh_drawable terrain;
-	mesh_drawable water;
-	mesh_drawable tree;
-	mesh_drawable cube1;
-	mesh_drawable cube2;
-
-
 	// ****************************** //
 	// Callback functions
 	// ****************************** //
@@ -77,10 +70,4 @@ struct scene_structure : cgp::scene_inputs_generic {
 	void mouse_click_event();
 	void keyboard_event();
 	void idle_frame();
-
 };
-
-
-
-
-
