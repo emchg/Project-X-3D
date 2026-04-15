@@ -63,8 +63,8 @@ void scene_structure::initialize()
 	quadrangle_mesh.connectivity = { { 0, 1, 2 }, { 0, 2, 3 } };
 	quadrangle_mesh.fill_empty_field();
 	quad_drawable.initialize_data_on_gpu(quadrangle_mesh);
-	opengl_shader_structure shader_raymarching{};
-	shader_raymarching.load(
+	opengl_shader_structure shader_raytracing{};
+	shader_raytracing.load(
 		project::path + "shaders/ray_tracer/ray_tracer.vert.glsl",
 		project::path + "shaders/ray_tracer/ray_tracer.frag.glsl"
 	);
@@ -74,12 +74,12 @@ void scene_structure::initialize()
 	tree_mesh.fill_empty_field();
 	tree_drawable.initialize_data_on_gpu(tree_mesh);
 
-	std::vector<Triangle> triangles{ { { 0.f, 0.f, 0.f }, { 0.f, 0.f, 0.f }, { 0.f, 0.f, 0.f } } };
+	std::vector<Triangle> triangles{ { { 0.f, 0.f, 0.f }, { 1.f, 0.f, 0.f }, { 1.f, 1.f, 0.f } } };
 
 	// std::vector<Triangle> triangles{};
-	// for (const auto& t : tree_mesh.position) {
-	// 	triangles.emplace_back(t.x, t.y, t.z);
-	// }
+	// for (const auto& t : tree_mesh.connectivity)
+	// 	triangles.emplace_back(tree_mesh.position[t.x], tree_mesh.position[t.y],
+	// 		tree_mesh.position[t.z]);
 
 	GLuint ssbo;
 	glGenBuffers(1, &ssbo);
@@ -89,7 +89,7 @@ void scene_structure::initialize()
 	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, ssbo);
 	glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
 	
-	quad_drawable.shader = shader_raymarching;
+	quad_drawable.shader = shader_raytracing;
 
 	std::cout << "End function scene_structure::initialize()" << std::endl;
 }
