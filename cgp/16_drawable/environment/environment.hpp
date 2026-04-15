@@ -7,6 +7,7 @@ namespace cgp
 	// An empty default environment used for standard drawable elements
 	//  Environment are used as storage for uniform variables shared through all drawable elements.
 	struct environment_generic_structure {
+		virtual ~environment_generic_structure() = default;
 
 		// Default environment contains nothing
 		//  Add the necessary variables in a derived class and send them using the functions opengl_uniform().

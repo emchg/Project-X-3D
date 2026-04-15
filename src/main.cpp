@@ -1,7 +1,4 @@
 
-// CGP library
-#include "cgp/cgp.hpp" 
-
 // Running application
 #include "application.hpp"
 

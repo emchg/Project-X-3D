@@ -86,9 +86,11 @@ void application_structure::initialize_window()
     int window_width = static_cast<int>(project::initial_window_size_width);
     int window_height = static_cast<int>(project::initial_window_size_height);
     if (project::initial_window_size_width < 1)
-        window_width = project::initial_window_size_width * s.window.monitor_width();
+        window_width = static_cast<int>(project::initial_window_size_width
+            * static_cast<float>(s.window.monitor_width()));
     if (project::initial_window_size_height < 1)
-        window_height = project::initial_window_size_height * s.window.monitor_height();
+        window_height = static_cast<int>(project::initial_window_size_height
+            * static_cast<float>(s.window.monitor_height()));
 
     s.window.create_window(window_width, window_height, "CGP Display", CGP_OPENGL_VERSION_MAJOR, CGP_OPENGL_VERSION_MINOR);
 
@@ -107,12 +109,12 @@ void application_structure::initialize_window()
 
 void application_structure::initialize_default_shaders()
 {
-    std::string default_path_shaders = project::path + "shaders/";
+    const std::string default_path_shaders = project::path + "shaders/";
 
     mesh_drawable::default_shader.load(default_path_shaders + "mesh/mesh.vert.glsl", default_path_shaders + "mesh/mesh.frag.glsl");
     triangles_drawable::default_shader.load(default_path_shaders + "mesh/mesh.vert.glsl", default_path_shaders + "mesh/mesh.frag.glsl");
 
-    image_structure const white_image = image_structure{1, 1, image_color_type::rgba, {255, 255, 255, 255}};
+    auto const white_image = image_structure{1, 1, image_color_type::rgba, {255, 255, 255, 255}};
     mesh_drawable::default_texture.initialize_texture_2d_on_gpu(white_image);
     triangles_drawable::default_texture.initialize_texture_2d_on_gpu(white_image);
 
@@ -155,7 +157,7 @@ void application_structure::animation_loop()
 
     imgui_create_frame();
     ImGui::GetIO().FontGlobalScale = project::gui_scale;
-    ImGui::Begin("GUI", NULL, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Begin("GUI", nullptr, ImGuiWindowFlags_AlwaysAutoResize);
     s.inputs.time_interval = time_interval;
 
     display_gui_default();
@@ -207,7 +209,7 @@ void application_structure::display_gui_default()
             project::vsync == true ? glfwSwapInterval(1) : glfwSwapInterval(0);
         }
 
-        std::string window_size = "Window " + str(s.window.width) + "px x " + str(s.window.height) + "px";
+        const std::string window_size = "Window " + str(s.window.width) + "px x " + str(s.window.height) + "px";
         ImGui::Text("%s", window_size.c_str());
 
         ImGui::Unindent();
@@ -236,12 +238,12 @@ void application_structure::on_window_resize(int width, int height)
     s.window.height = height;
 }
 
-void application_structure::on_mouse_move(double xpos, double ypos)
+void application_structure::on_mouse_move(double xPos, double yPos)
 {
     auto& s = scene();
 
-    ImGui_ImplGlfw_CursorPosCallback(s.window.glfw_window, xpos, ypos);
-    vec2 const pos_relative = s.window.convert_pixel_to_relative_coordinates({xpos, ypos});
+    ImGui_ImplGlfw_CursorPosCallback(s.window.glfw_window, xPos, yPos);
+    vec2 const pos_relative = s.window.convert_pixel_to_relative_coordinates({xPos, yPos});
     s.inputs.mouse.position.update(pos_relative);
 
     s.inputs.mouse.on_gui = ImGui::GetIO().WantCaptureMouse;
@@ -264,12 +266,12 @@ void application_structure::on_mouse_click(int button, int action, int mods)
     s.mouse_click_event();
 }
 
-void application_structure::on_mouse_scroll(double xoffset, double yoffset)
+void application_structure::on_mouse_scroll(double xoffset, double yOffset)
 {
     auto& s = scene();
 
-    ImGui_ImplGlfw_ScrollCallback(s.window.glfw_window, xoffset, yoffset);
-    s.inputs.mouse.scroll = yoffset;
+    ImGui_ImplGlfw_ScrollCallback(s.window.glfw_window, xoffset, yOffset);
+    s.inputs.mouse.scroll = static_cast<float>(yOffset);
 
     s.inputs.mouse.on_gui = ImGui::GetIO().WantCaptureMouse;
     if (s.inputs.mouse.on_gui)
@@ -331,16 +333,16 @@ void application_structure::window_size_callback(GLFWwindow* window, int width, 
         app->on_window_resize(width, height);
 }
 
-void application_structure::mouse_move_callback(GLFWwindow* window, double xpos, double ypos)
+void application_structure::mouse_move_callback(GLFWwindow* window, double xPos, double yPos)
 {
     if (auto* app = from_window(window))
-        app->on_mouse_move(xpos, ypos);
+        app->on_mouse_move(xPos, yPos);
 }
 
-void application_structure::mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+void application_structure::mouse_scroll_callback(GLFWwindow* window, double xOffset, double yOffset)
 {
     if (auto* app = from_window(window))
-        app->on_mouse_scroll(xoffset, yoffset);
+        app->on_mouse_scroll(xOffset, yOffset);
 }
 
 void application_structure::mouse_click_callback(GLFWwindow* window, int button, int action, int mods)

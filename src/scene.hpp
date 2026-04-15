@@ -31,7 +31,7 @@ struct scene_structure : cgp::scene_inputs_generic {
 	// Context
 	// ****************************** //
 
-	// Environment controller (background color, )
+	// Environment controller (background color, ...)
 	environment_structure environment; 
 	// Window where the scene is displayed
 	window_structure window; 
@@ -41,7 +41,7 @@ struct scene_structure : cgp::scene_inputs_generic {
 	gui_parameters gui; 
 
 	// Display information at the start of the program
-	void display_info();
+	void display_info() const;
 
 	// ****************************** //
 	// Camera controller
@@ -58,6 +58,9 @@ struct scene_structure : cgp::scene_inputs_generic {
 	// ****************************** //
 	// Elements and shapes of the scene
 	// ****************************** //
+
+	cgp::mesh_drawable quad_drawable;
+	cgp::mesh_drawable tree_drawable;
 
 	mesh_drawable global_frame;          // The standard global frame
 

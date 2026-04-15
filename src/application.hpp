@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cgp/cgp.hpp"
-#include <iostream>
 
 struct scene_structure;
 
@@ -17,7 +16,8 @@ public:
 
     // Window and rendering bootstrap helpers.
     void initialize_window();
-    void initialize_default_shaders();
+
+    static void initialize_default_shaders();
     void setup_callbacks();
     // Per-frame update invoked by the platform loop.
     void animation_loop();
@@ -28,9 +28,9 @@ public:
 
     // Input plumbing forwarded from GLFW callbacks.
     void on_window_resize(int width, int height);
-    void on_mouse_move(double xpos, double ypos);
+    void on_mouse_move(double xPos, double yPos);
     void on_mouse_click(int button, int action, int mods);
-    void on_mouse_scroll(double xoffset, double yoffset);
+    void on_mouse_scroll(double xOffset, double yOffset);
     void on_keyboard(int key, int scancode, int action, int mods);
     void on_window_focus(int focused);
     void on_char(unsigned int codepoint);
@@ -38,8 +38,8 @@ public:
     static application_structure* from_window(GLFWwindow* window);
 
     static void window_size_callback(GLFWwindow* window, int width, int height);
-    static void mouse_move_callback(GLFWwindow* window, double xpos, double ypos);
-    static void mouse_scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+    static void mouse_move_callback(GLFWwindow* window, double xPos, double yPos);
+    static void mouse_scroll_callback(GLFWwindow* window, double xOffset, double yOffset);
     static void mouse_click_callback(GLFWwindow* window, int button, int action, int mods);
     static void keyboard_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
     static void window_focus_callback(GLFWwindow* window, int focused);
@@ -47,7 +47,7 @@ public:
 
 
     scene_structure& scene();
-    scene_structure const& scene() const;
+    [[nodiscard]] scene_structure const& scene() const;
 
 
     scene_structure* scene_ptr = nullptr;

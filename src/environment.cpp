@@ -17,12 +17,12 @@ float project::initial_window_size_height = 0.5f;
 
 
 // This path will be automatically filled when the program starts
-std::string project::path = ""; 
+std::string project::path{};
 
 
 
 
-void environment_structure::send_opengl_uniform(opengl_shader_structure const& shader, bool expected) const
+void environment_structure::send_opengl_uniform(opengl_shader_structure const& shader, const bool expected) const
 {
 	opengl_uniform(shader, "projection", camera_projection, expected);
 	opengl_uniform(shader, "view", camera_view, expected);
